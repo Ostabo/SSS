@@ -1,11 +1,11 @@
 import numpy as np
 
 raw_data_width = np.genfromtxt('./data/dina4_breite.csv',
-                                delimiter=';',
-                                skip_header=1000,
-                                converters={1: lambda s: float(s.decode('utf-8').replace(',', '.'))},
-                                usecols=1,
-                                dtype=str)
+                               delimiter=';',
+                               skip_header=1000,
+                               converters={1: lambda s: float(s.decode('utf-8').replace(',', '.'))},
+                               usecols=1,
+                               dtype=str)
 
 raw_data_length = np.genfromtxt('./data/dina4_länge.csv',
                                 delimiter=';',
@@ -19,13 +19,11 @@ std_width = np.std(raw_data_width, dtype=float)
 mean_length = np.mean(raw_data_length, dtype=float)
 std_length = np.std(raw_data_length, dtype=float)
 
-
 perc_68_w = mean_width + 1 * std_width * 2
 perc_95_w = mean_width + 1.96 * std_width * 4
 
 perc_68_l = mean_length + 1 * std_length * 2
 perc_95_l = mean_length + 1.96 * std_length * 4
-
 
 print('Mean width: ' + str(mean_width))
 print('Std width: ' + str(std_width))
@@ -38,5 +36,30 @@ print('95% Width: ' + str(perc_95_w))
 print('68% Length: ' + str(perc_95_l))
 print('95% Length: ' + str(perc_95_l))
 
-# TODO understand stuff and get cm
+# Funktionen zur Berechnung
+a1 = np.log(29.7) / np.log(np.mean(raw_data_width))
+b1 = np.log(29.7) - (a1 * np.log(np.mean(raw_data_width)))
+z1 = (np.exp(b1) * a1 * np.mean(raw_data_width) ** (a1 - 1))
 
+# e^b * x^a  -  Umkehrung der doppelten Logarithmierung
+y1 = np.exp(b1) * np.power(np.mean(raw_data_width), a1)
+
+# Berechnung von 21 cm Messfehler #
+a2 = np.log(21) / np.log(np.mean(raw_data_length))
+b2 = np.log(21) - (a2 * np.log(np.mean(raw_data_length)))
+z2 = (np.exp(b2) * a2 * np.mean(raw_data_length) ** (a2 - 1))
+
+# e^b * x^a  -  Umkehrung der doppelten Logarithmierung
+y2 = np.exp(b2) * np.power(np.mean(raw_data_length), a2)
+
+# Errechnung des Flächeninhalts
+flache = round(y2, 2) * round(y1, 2)
+# Ausgeben der errechneten Messkorrekturen für die jeweilige Gaußverteilung
+print("y(68%) = " + str(round(y2, 2)) + " cm +- " + str(np.abs(perc_68_w)) + " cm")
+print("y(95%) = " + str(round(y2, 2)) + " cm +- " + str(np.abs(perc_95_w)) + " cm")
+print()
+print("Ein DinA4 Blatt hat ein Flächeninhalt von " + str(round(flache, 2)) + " cm^2")
+print("68% hat bei einem Flächeninhalt von " + str(round(flache, 2)) + "cm^2 einen Messfehler von +" + str(
+    (perc_68_l + perc_68_l)) + "cm")
+print("95% hat bei einem Flächeninhalt von " + str(round(flache, 2)) + "cm^2 einen Messfehler von +" + str(
+    (perc_95_l + perc_95_l)) + "cm")
