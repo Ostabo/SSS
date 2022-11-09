@@ -124,15 +124,22 @@ def derivKennlinie(x):
 
 
 x1 = np.mean(raw_data_width)
-delta_y_width = np.abs(derivKennlinie(x1) * emp_std_width)
+delta_y_width = derivKennlinie(x1) * emp_std_width
 y_in_cm_width = kennlinie(x1)
 
 x2 = np.mean(raw_data_length)
-delta_y_length = np.abs(derivKennlinie(x2) * emp_std_length)
+delta_y_length = derivKennlinie(x2) * emp_std_length
 y_in_cm_length = kennlinie(x2)
 
-print('Width: ' + str(y_in_cm_width) + ' +- ' + str(delta_y_width))
-print('Length: ' + str(y_in_cm_length) + ' +- ' + str(delta_y_length))
+print('Width: ' + str(y_in_cm_width) + ' +- ' + str(np.abs(delta_y_width)))
+print('Length: ' + str(y_in_cm_length) + ' +- ' + str(np.abs(delta_y_length)))
 print()
 area = y_in_cm_width * y_in_cm_length
-print('Area: ' + str(area) + ' +- ' + str(np.sqrt(delta_y_width ** 2 + delta_y_length ** 2)))
+print('Area: ' + str(area) + ' +- '
+      + str(
+    np.abs(np.sqrt(
+        np.power(delta_y_width * y_in_cm_width, 2)
+        + np.power(delta_y_length * y_in_cm_length, 2)
+    )
+    )
+))
