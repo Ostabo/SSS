@@ -12,6 +12,7 @@ def get_stuck_pixels():
     light_img = get_image("./data/light")
     return np.any(dark_img[:, :] == light_img[:, :])
 
+
 def get_dead_pixels():
     light_img = get_image("./data/light")
     return np.any(light_img[:, :] == 0)

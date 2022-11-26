@@ -14,7 +14,7 @@ def get_image(image_path):
 
 def fix_noise(dark_img, light_img, img):
     img = img - dark_img
-    light_img = (light_img - dark_img) / 255
+    light_img = (light_img - dark_img) / np.mean(light_img)
     img = img / light_img
     return img
 
@@ -32,11 +32,11 @@ beta = 0  # Brightness control (0-100)
 adjusted_dark = cv2.convertScaleAbs(img_dark, alpha=alpha, beta=beta)
 adjusted_light = cv2.convertScaleAbs(img_light, alpha=alpha, beta=beta)
 
-cv2.imshow('original', img_dark)
-cv2.imshow('adjusted', adjusted_dark)
+cv2.imshow('original_dark', img_dark)
+cv2.imshow('adjusted_dark', adjusted_dark)
 
-cv2.imshow('original', img_light)
-cv2.imshow('adjusted', adjusted_light)
+cv2.imshow('original_light', img_light)
+cv2.imshow('adjusted_light', adjusted_light)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
