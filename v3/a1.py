@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 sound_1_data = np.genfromtxt('./data/sound1.csv',
                               delimiter=';',
                               skip_header=3800,
