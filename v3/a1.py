@@ -43,6 +43,7 @@ plt.show()
 
 find_max = np.max(spektrum)
 find_index_max = np.where(spektrum == find_max)
-print('Frequenz mit größter Amplitude : ' + str(find_index_max[0][0]) + ' Hz' + ' at ' + str(find_max))
+print('Frequenz mit groesster Amplitude : ' + str(find_index_max[0][0]) + ' Hz'
+      + ' - Amplitude: ' + str(round(find_max, 2)))
 
 
