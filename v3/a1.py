@@ -35,7 +35,7 @@ spektrum = np.abs(fourier)
 freq = range(0, len(tuple1), 1) / (difference * len(tuple1))
 
 plt.plot(freq, spektrum, 'b')
-plt.ylabel('Amplitude')
+plt.ylabel('Amplitude in mV')
 plt.xlabel('Frequenz in kHz')
 plt.grid(True)
 plt.savefig('img/sound1_fft.png')
@@ -44,6 +44,6 @@ plt.show()
 find_max = np.max(spektrum)
 find_index_max = np.where(spektrum == find_max)
 print('Frequenz mit groesster Amplitude : ' + str(find_index_max[0][0]) + ' Hz'
-      + ' - Amplitude: ' + str(round(find_max, 2)))
+      + ' - Amplitude: ' + str(round(find_max, 2)) + ' mV')
 
 

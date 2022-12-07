@@ -1,6 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+def translate(value, leftMin, leftMax, rightMin, rightMax):
+    # Figure out how 'wide' each range is
+    leftSpan = leftMax - leftMin
+    rightSpan = rightMax - rightMin
+
+    # Convert the left range into a 0-1 range (float)
+    valueScaled = float(value - leftMin) / float(leftSpan)
+
+    # Convert the 0-1 range into a value in the right range.
+    return rightMin + (valueScaled * rightSpan)
+
+
 data_big = np.genfromtxt('./data/data_big.csv',
                          delimiter=';',
                          skip_header=1,
@@ -44,21 +57,43 @@ plt.grid(True)
 plt.savefig('img/sound_phase.png')
 plt.show()
 
+plt.plot(frequency_s, b_peak_to_peak_s, 'b')
+plt.plot(frequency, b_peak_to_peak, 'r')
+plt.title('Amplitude vs. Frequency')
+plt.legend(['small', 'big'])
+plt.ylabel('Amplitude in mV')
+plt.xlabel('Frequenz in Hz')
+plt.grid(True)
+plt.savefig('img/sound_amplitude.png')
+plt.show()
+
 # Amplitude in dB
-a_peak_to_peak_db = 20 * np.log10(a_peak_to_peak)
+b_peak_to_peak_db_s = 20 * np.log10(b_peak_to_peak_s)
 b_peak_to_peak_db = 20 * np.log10(b_peak_to_peak)
 # Phase in degree
-phase_degree_s = np.array(phase_s) * 360 * np.array(a_cycle_time_s)
-phase_degree = np.array(phase) * 360 * np.array(a_cycle_time)
+phase_degree_s = (np.array(phase_s) * -1) * np.array(frequency_s) * 360 / 1e6 * 360
+phase_degree = (np.array(phase) * -1) * np.array(frequency) * 360 / 1e6 * 360
+# TODO understand why 2 * 360 and scale is 1e6
 
 # Plot Amplitude and Phase - Bode Diagramm
-plt.plot(a_peak_to_peak_db, phase_degree_s, 'b')
-plt.plot(a_peak_to_peak_db, phase_degree, 'r')
-plt.title('Phase vs. Amplitude')
+plt.plot(frequency_s, b_peak_to_peak_db_s, 'b')
+plt.plot(frequency, b_peak_to_peak_db, 'r')
+plt.title('Frequency vs. Amplitude - Bode Diagram')
 plt.legend(['small', 'big'])
-plt.ylabel('Phase in degree')
-plt.xlabel('Amplitude in dB')
+plt.ylabel('Amplitude in dB')
+plt.xlabel('Frequency in Hz')
 plt.grid(True)
 plt.semilogx()
-plt.savefig('img/sound_bode.png')
+plt.savefig('img/sound_bode_amplitude.png')
+plt.show()
+
+plt.plot(frequency_s, phase_degree_s, 'b')
+plt.plot(frequency, phase_degree, 'r')
+plt.title('Frequency vs. Phase - Bode Diagram')
+plt.legend(['small', 'big'])
+plt.ylabel('Phase in °')
+plt.xlabel('Frequenz in Hz')
+plt.grid(True)
+plt.semilogx()
+plt.savefig('img/sound_bode_phase.png')
 plt.show()
