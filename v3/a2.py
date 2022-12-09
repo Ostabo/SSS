@@ -58,9 +58,8 @@ plt.show()
 b_peak_to_peak_db_s = 20 * np.log10(b_peak_to_peak_s)
 b_peak_to_peak_db = 20 * np.log10(b_peak_to_peak)
 # Phase in degree
-phase_degree_s = (np.array(phase_s) * -1) * np.array(frequency_s) * 360 / 1e6 * 360
-phase_degree = (np.array(phase) * -1) * np.array(frequency) * 360 / 1e6 * 360
-# TODO understand why 2 * 360 and scale is 1e6
+phase_degree_s = np.array(phase_s) * np.array(frequency_s) * 360 / 1e6  # * -1
+phase_degree = np.array(phase) * np.array(frequency) * 360 / 1e6  # * -1
 
 # Plot Amplitude and Phase - Bode Diagramm
 plt.plot(frequency_s, b_peak_to_peak_db_s, 'b')
