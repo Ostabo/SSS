@@ -40,7 +40,7 @@ TASKS = ['hoch', 'runter', 'links', 'rechts']
 spec_arr = []
 
 for t in TASKS:
-    #print(t)
+    # print(t)
     windows = []
     windows_ref = []
     windows_ref_lars = []
@@ -61,7 +61,6 @@ for t in TASKS:
     # print('Spec - Spec_Ref: ', correlation(spec, spec_ref))
     # print('Spec - Spec_Ref_Lars: ', correlation(spec, spec_ref_lars))
     # print('Spec_Ref - Spec_Ref_Lars: ', correlation(spec_ref, spec_ref_lars))
-
 
 
 def check_input(data):
@@ -109,5 +108,3 @@ print(f"Accuracy: {hits / (hits + misses) * 100}%")
 
 print(f"Hits: {hits_lars} - Misses: {misses_lars}")
 print(f"Accuracy: {hits_lars / (hits_lars + misses_lars) * 100}%")
-
-
