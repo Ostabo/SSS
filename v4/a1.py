@@ -42,7 +42,7 @@ def windowing(signal):
     window_overlap = window_size // 2  # int division
     gauss_window = scipy.signal.windows.gaussian(window_size, window_size / 4)
 
-    windows = [
+    windows = [  # Zero padding (V. 16 S. 27)
         numpy.concatenate(
             (numpy.zeros(x), signal[x:x + window_size] * gauss_window, numpy.zeros(len(signal) - x))
         ) for x in range(0, len(signal) - window_size, window_overlap)
@@ -99,4 +99,3 @@ if __name__ == '__main__':
         plt.grid(True)
         plt.savefig(f'plots/plot_windowing_spectrum_{i}.png')
         plt.show()
-
