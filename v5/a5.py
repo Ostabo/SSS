@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def record():
-    data = rl.cbVInScan(0,0,0,200, 8000,1)
+    data = rl.cbVInScan(0, 0, 0, 200, 8000, 1)
     np.save("aufgabe_5_8000_s200.npy", data)
     plt.plot(data)
 
@@ -20,5 +20,5 @@ def plot_data():
 
 
 if __name__ == "__main__":
-    #record()
+    # record()
     plot_data()
